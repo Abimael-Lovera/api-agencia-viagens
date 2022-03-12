@@ -9,10 +9,15 @@ import java.util.List;
 
 @Service
 public class PedidoServices {
+
     @Autowired
     private PedidoRepository pedidoRepository;
 
     public List<PedidoModel> findAll() {
         return pedidoRepository.findAll();
+    }
+
+    public PedidoModel save(PedidoModel pedidoModel) {
+        return  pedidoRepository.save(pedidoModel);
     }
 }
