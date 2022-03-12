@@ -37,4 +37,15 @@ public class PedidoController {
         }
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Pedido nao encontrado");
     }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Object> deletePedido(@PathVariable(value = "id") Long id){
+        Optional<PedidoModel> pedidoModelOptional = pedidoServices.findById(id);
+        if (pedidoModelOptional.isPresent()) {
+            pedidoServices.delete(pedidoModelOptional.get());
+            return ResponseEntity.status(HttpStatus.OK).body("Pedido Excluido com Sucesso");
+        }
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Pedido nao encontrado");
+    }
+
 }

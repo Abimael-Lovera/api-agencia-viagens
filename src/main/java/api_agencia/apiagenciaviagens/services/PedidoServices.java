@@ -27,4 +27,9 @@ public class PedidoServices {
     public Optional<PedidoModel> findById(Long id) {
         return pedidoRepository.findById(id);
     }
+
+    @Transactional
+    public void delete(PedidoModel pedidoModel) {
+        pedidoRepository.delete(pedidoModel);
+    }
 }
