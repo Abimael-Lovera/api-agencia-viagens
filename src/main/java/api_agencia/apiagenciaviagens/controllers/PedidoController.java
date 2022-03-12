@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/pedido")
@@ -26,5 +27,14 @@ public class PedidoController {
     @PostMapping
     public ResponseEntity<Object> savePedido (@RequestBody PedidoModel pedidoModel){
         return ResponseEntity.status(HttpStatus.CREATED).body(pedidoServices.save(pedidoModel));
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<Object> getOnePedido(@PathVariable(value = "id") Long id){
+        Optional<PedidoModel> pedidoModelOptional = pedidoServices.findById(id);
+        if (pedidoModelOptional.isPresent()) {
+            return ResponseEntity.status(HttpStatus.OK).body(pedidoModelOptional.get());
+        }
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Pedido nao encontrado");
     }
 }
