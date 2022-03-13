@@ -47,5 +47,15 @@ public class PedidoController {
         }
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Pedido nao encontrado");
     }
-
+    @PutMapping("/{id}")
+    public ResponseEntity<Object> updatePedido(@PathVariable(value = "id") Long id,
+                                               @RequestBody PedidoModel pedidoModel){
+        Optional<PedidoModel> pedidoModelOptional = pedidoServices.findById(id);
+        if (!pedidoModelOptional.isPresent()) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Pedido nao encontrado");
+        }
+//        var pedidoModel = new PedidoModel();
+        pedidoModel.setId(pedidoModelOptional.get().getId());
+        return ResponseEntity.status(HttpStatus.OK).body(pedidoServices.save(pedidoModel));
+    }
 }
